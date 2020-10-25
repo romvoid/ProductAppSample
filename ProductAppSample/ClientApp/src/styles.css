@@ -1,0 +1,25 @@
+.form-group label {
+  color: grey;
+}
+
+.form-group input {
+  font-weight: 500;
+}
+
+.form-group input::placeholder {
+  color: #000000;
+  font-weight: 300;
+}
+
+thead th {
+  font-weight: 400;
+}
+
+table tr:hover {
+  background-color: #fffbf2;
+  cursor: pointer;
+}
+
+input.invalid {
+  border-color: red;
+}

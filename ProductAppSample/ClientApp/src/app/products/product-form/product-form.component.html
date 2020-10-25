@@ -1,0 +1,42 @@
+<form #form="ngForm" autocomplete="off" (submit)="onSubmit(form)">
+  <input type="hidden" name="ProductId" [value]="service.formData.ProductId">
+  <div class="form-group">
+    <label>Product Name</label>
+    <input name="ProductName" #ProductName="ngModel" [(ngModel)]="service.formData.ProductName"
+           class="form-control form-control-lg" placeholder="Product Name" required
+           [class.invalid]="ProductName.invalid && ProductName.touched">
+  </div>
+  <div class="form-group">
+    <label>Product Description</label>
+    <input name="ProductDescription" #ProductDescription="ngModel" [(ngModel)]="service.formData.ProductDescription"
+           class="form-control form-control-lg" placeholder="Product Description" required
+           [class.invalid]="ProductDescription.invalid && ProductDescription.touched">
+  </div>
+  <div class="form-group">
+    <div class="form-group">
+      <label>Product Type</label>
+      <input name="ProductType" #ProductType="ngModel" [(ngModel)]="service.formData.ProductType"
+             class="form-control form-control-lg" placeholder="Product Type" required
+             [class.invalid]="ProductType.invalid && ProductType.touched">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="form-group">
+      <label>Product Supplier</label>
+      <input name="ProductSupplier" #ProductSupplier="ngModel" [(ngModel)]="service.formData.ProductSupplier"
+             class="form-control form-control-lg" placeholder="Product Supplier" required
+             [class.invalid]="ProductSupplier.invalid && ProductSupplier.touched">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="form-group">
+      <label>Product Manufacturer</label>
+      <input name="ProductManufacturer" #ProductManufacturer="ngModel" [(ngModel)]="service.formData.ProductManufacturer"
+             class="form-control form-control-lg" placeholder="Product Manufacturer" required
+             [class.invalid]="ProductManufacturer.invalid && ProductManufacturer.touched">
+    </div>
+  </div>
+  <div class="form-group">
+    <button class="btn btn-info btn-lg btn-block" type="submit" [disabled]="form.invalid">SUBMIT</button>
+  </div>
+</form>
