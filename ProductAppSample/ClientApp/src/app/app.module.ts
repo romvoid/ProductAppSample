@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ProductsComponent } from './products/products.component';
 import { ProductFormComponent } from './products/product-form/product-form.component';
+import { getBaseUrl } from '../main';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,7 @@ import { ProductFormComponent } from './products/product-form/product-form.compo
     HttpClientModule,
     FormsModule
   ],
-  providers: [ProductService],
+  providers: [ProductService, { provide: 'BASE_URL', useFactory: getBaseUrl }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

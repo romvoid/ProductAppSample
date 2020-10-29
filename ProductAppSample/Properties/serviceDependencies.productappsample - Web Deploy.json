@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/cadence/databases/ProductDB",
+      "type": "mssql.azure",
+      "connectionId": "TestConnection",
+      "secretStore": "AzureAppSettings"
+    }
+  }
+}

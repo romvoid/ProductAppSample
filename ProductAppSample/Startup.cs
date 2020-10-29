@@ -29,6 +29,9 @@ namespace ProductAppSample
                 configuration.RootPath = "ClientApp/dist";
             });
 
+            // create cors policy
+            services.AddCors();
+
             services.AddDbContext<ProductContext>(options => 
             options.UseSqlServer(Configuration.GetConnectionString("TestConnection")));
         }
@@ -55,7 +58,7 @@ namespace ProductAppSample
             }
 
             app.UseRouting();
-
+            app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

@@ -1,0 +1,42 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "subscriptionId": {
+      "value": null
+    },
+    "name": {
+      "value": "productappsample"
+    },
+    "location": {
+      "value": "Australia East"
+    },
+    "hostingPlanName": {
+      "value": "ASP-cadencerg-aeeb"
+    },
+    "serverFarmResourceGroup": {
+      "value": "cadence_rg"
+    },
+    "alwaysOn": {
+      "value": true
+    },
+    "sku": {
+      "value": "F1: Free"
+    },
+    "skuCode": {
+      "value": "F1"
+    },
+    "workerSize": {
+      "value": "3"
+    },
+    "workerSizeId": {
+      "value": "3"
+    },
+    "numberOfWorkers": {
+      "value": "1"
+    },
+    "linuxFxVersion": {
+      "value": "DOTNETCORE|3.1"
+    }
+  }
+}

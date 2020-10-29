@@ -1,0 +1,84 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: 'windows-latest'
+  demands: npm
+
+variables:
+  RestoreBuildProjects: '**/*.csproj'
+  TestProjects: '**/*[Tt]ests/*.csproj'
+  ArtifactName: 'ProductAppSample'
+
+steps:
+  - task: UseDotNet@2
+    displayName: Use .Net Core 3.1.x SDK
+    inputs:
+      packageType: 'sdk'
+      version: '3.1.x'
+
+  - task: DotNetCoreCLI@2
+    displayName: Restore
+    inputs:
+      command: 'restore'
+      projects: '$(RestoreBuildProjects)'
+      feedsToUse: 'select'
+ 
+  - task: Npm@1
+    displayName: 'npm install'
+    inputs:
+      workingDir: ProductAppSample/ClientApp
+      verbose: false
+
+  - task: DotNetCoreCLI@2
+    displayName: Build
+    inputs:
+      projects: '$(RestoreBuildProjects)'
+      arguments: '--configuration $(BuildConfiguration)'
+
+  - task: DotNetCoreCLI@2
+    displayName: Test
+    inputs:
+      command: test
+      projects: '$(TestProjects)'
+      arguments: '--configuration $(BuildConfiguration)'
+
+  - task: VSBuild@1
+    displayName: 'Build Database Project'
+    inputs:
+      solution: ProductAppSampleDB/ProductAppSampleDB.sqlproj
+      platform: 'Any CPU'
+      configuration: '$(BuildConfiguration)'
+
+  - task: CopyFiles@2
+    displayName: 'Copy ProductAppSampleDB dacpac to release'
+    inputs:
+      SourceFolder: ProductAppSampleDB\bin\Output\
+      Contents: '*'
+      TargetFolder: '$(build.artifactstagingdirectory)\ProductAppSampleDB'
+  
+  - task: CopyFiles@2
+    displayName: 'Copy ARM Templates to release'
+    inputs:
+      SourceFolder: ARMTemplates
+      Contents: '*'
+      TargetFolder: '$(build.artifactstagingdirectory)\ARMTemplates'
+
+  - task: DotNetCoreCLI@2
+    displayName: "Publish"
+    inputs:
+      command: 'publish'
+      publishWebProjects: true
+      arguments: '-r linux-x64 --configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+      zipAfterPublish: true
+    
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact'
+    inputs:
+      PathtoPublish: '$(build.artifactstagingdirectory)'
+      ArtifactName: '$(ArtifactName)'

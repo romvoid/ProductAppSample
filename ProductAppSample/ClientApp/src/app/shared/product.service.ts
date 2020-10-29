@@ -1,5 +1,5 @@
 import { Product } from './product.model';
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 
 @Injectable({
@@ -8,25 +8,24 @@ import { HttpClient } from "@angular/common/http";
 export class ProductService {
 
   formData: Product = new Product();
-  readonly rootURL = 'https://localhost:5001/api';
   list: Product[];
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) { }
 
   postProduct() {
-    return this.http.post(`${this.rootURL}/Products`, this.formData);
+    return this.http.post(this.baseUrl + 'api/Products', this.formData);
   }
 
   putProduct() {
-    return this.http.put(`${this.rootURL}/Products/${this.formData.ProductId}`, this.formData);
+    return this.http.put(this.baseUrl + `api/Products/${this.formData.ProductId}`, this.formData);
   }
 
   deleteProduct(id) {
-    return this.http.delete(`${this.rootURL}/Products/${id}`);
+    return this.http.delete(this.baseUrl + `api/Products/${id}`);
   }
 
   refreshList() {
-    this.http.get(`${this.rootURL}/Products/`)
+    this.http.get(this.baseUrl + `api/Products/`)
       .toPromise()
       .then(res => this.list = res as Product[]);
   }
